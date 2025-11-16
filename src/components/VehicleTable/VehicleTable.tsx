@@ -37,6 +37,23 @@ export const VehicleTable: React.FC = () => {
     fetchVehicles();
   }, []);
 
+  const handleDelete = async (id: number) => {
+    const confirmed = window.confirm("Delete this vehicle?");
+    if (!confirmed) return;
+
+    const previous = vehicles;
+    setVehicles(vehicles.filter((v) => v.id !== id));
+
+    try {
+      await axios.delete(`http://localhost:8080/api/vehicles/remove/${id}`);
+    } catch (err) {
+      setVehicles(previous);
+      alert("Failed to delete vehicle");
+      console.error(err);
+    }
+  };
+
+
   return (
     <div className="vehicle-page">
       <div className="vehicle-header">
@@ -88,9 +105,7 @@ export const VehicleTable: React.FC = () => {
                     <td>
                       <button
                         className="btn-delete"
-                        onClick={() => {
-                          alert("Open delete vehicle confirmation (implement routing/modal).");
-                        }}
+                        onClick={() => handleDelete(v.id)}
                         title="Delete"
                       >
                         Delete
