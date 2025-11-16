@@ -1,0 +1,122 @@
+.vehicle-page {
+  padding: 20px;
+  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+.vehicle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto 18px;
+  gap: 12px;
+  padding: 0 12px;
+}
+
+.vehicle-header h1 {
+  color: black;
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+}
+
+/* New button */
+.btn-new {
+  background: #00c853;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+}
+.btn-new:hover { transform: translateY(-1px); }
+
+.table-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+/* Table styles */
+.vehicle-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  border: 0.5px solid black;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Header row */
+.vehicle-table thead th {
+  background: #0b9eb0;
+  color: white;
+  text-align: center;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 0.5px solid black;
+}
+
+/* Table Body */
+.vehicle-table tbody td {
+  color: #000;
+  font-size: medium;
+  padding: 12px 14px;
+  background: #fff;
+  border: 0.5px solid black;
+  font-size: 14px;
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+/* Delete button */
+.btn-delete {
+  background: #ff4d4f;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-delete:hover { transform: translateY(-1px); }
+
+/* No-data and status messages */
+.status {
+  text-align: center;
+  padding: 18px;
+  color: #333;
+  font-size: 16px;
+}
+.status.error { color: #b00020; }
+
+.no-data {
+  text-align: center;
+  padding: 18px;
+  color: #666;
+}
+
+/* make the layout responsive: smaller screens get horizontal padding */
+@media (max-width: 900px) {
+  .vehicle-header,
+  .table-wrapper {
+    padding: 0 10px;
+    max-width: 100%;
+  }
+
+  .vehicle-table thead th {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .vehicle-table tbody td {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+}
