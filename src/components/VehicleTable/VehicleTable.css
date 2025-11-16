@@ -63,6 +63,14 @@
   border: 0.5px solid black;
 }
 
+/* ID column */
+.vehicle-table th:first-child,
+.vehicle-table td:first-child {
+  width: 60px;
+  max-width: 60px;
+  text-align: center;
+}
+
 /* Table Body */
 .vehicle-table tbody td {
   color: #000;
