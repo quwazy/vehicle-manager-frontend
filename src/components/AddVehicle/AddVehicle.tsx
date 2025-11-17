@@ -37,31 +37,34 @@ export const AddVehicle: React.FC = () => {
   const validate = (): boolean => {
     const e: Record<string, string> = {};
 
+    if (!form.fuel) e.fuel = "Fuel cannot be null";
+
     if (!form.model.trim()) e.model = "Model cannot be empty";
     else if (form.model.trim().length > 40)
       e.model = "Model cannot exceed 40 characters";
 
     if (!form.firstRegistrationYear.trim())
       e.firstRegistrationYear = "First registration year cannot be empty";
-    if (
-      form.firstRegistrationYear.trim() &&
-      !/^\d{4}$/.test(form.firstRegistrationYear.trim())
-    ) {
+    else if (!/^\d{4}$/.test(form.firstRegistrationYear.trim())) {
       e.firstRegistrationYear = "Enter a 4-digit year (e.g. 2023)";
+    } else {
+      const year = Number(form.firstRegistrationYear.trim());
+      if (year < 1885 || year > 2025) {
+        e.firstRegistrationYear = "Year must be between 1885 and 2025";
+      }
     }
 
     if (form.cubicCapacity === null || Number.isNaN(form.cubicCapacity))
       e.cubicCapacity = "Cubic capacity cannot be empty";
-    else if (form.cubicCapacity <= 0)
-      e.cubicCapacity = "Cubic capacity must be positive";
+    else if (form.cubicCapacity <= 999)
+      e.cubicCapacity = "Cubic capacity must be above 999 cc";
     else if (form.cubicCapacity > 9999)
       e.cubicCapacity = "Cubic capacity cannot exceed 9,999 cc";
 
-    if (!form.fuel) e.fuel = "Fuel cannot be null";
-
     if (form.mileage === null || Number.isNaN(form.mileage))
       e.mileage = "Mileage cannot be empty";
-    else if (form.mileage < 0) e.mileage = "Mileage cannot be negative";
+    else if (form.mileage < 0) 
+      e.mileage = "Mileage cannot be negative";
     else if (form.mileage > 9999999)
       e.mileage = "Mileage cannot exceed 9,999,999 km";
 

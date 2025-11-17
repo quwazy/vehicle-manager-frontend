@@ -5,7 +5,7 @@
   background: #fff;
 }
 
-/* Header with title and save button on the right */
+/* Header */
 .add-vehicle-header {
   display: flex;
   align-items: center;
@@ -109,7 +109,6 @@
   color: #b00020;
 }
 
-/* Make select look like input and hide arrow */
 .input-like {
   background: #fff;
   height: 36px;
@@ -134,18 +133,15 @@
   display: none;
 }
 
-/* Placeholder option for select (grey text) */
-.input-like option.placeholder-option {
-  color: #aaa;
-}
 /* When select has no value, show placeholder in grey */
 .input-like:invalid {
-  color: #000000;
+  color: #6f6f70;
 }
+
 /* When a value is selected, use normal color */
 .input-like:not(:invalid) {
   color: #6f6f70;
-}
+} 
 
 /* responsive */
 @media (max-width: 900px) {
