@@ -21,10 +21,15 @@ const DEFAULT: CreateVehicleDTO = {
   mileage: null,
 };
 
+interface ServerMessage {
+  text: string;
+  type: "success" | "error";
+}
+
 export const AddVehicle: React.FC = () => {
   const [form, setForm] = useState<CreateVehicleDTO>({ ...DEFAULT });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [serverMessage, setServerMessage] = useState<string | null>(null);
+  const [serverMessage, setServerMessage] = useState<ServerMessage | null>(null);
   const navigate = useNavigate();
 
   const fuelOptions: FuelOption[] = ["PETROL", "DIESEL", "HYBRID"];
@@ -33,8 +38,8 @@ export const AddVehicle: React.FC = () => {
     const e: Record<string, string> = {};
 
     if (!form.model.trim()) e.model = "Model cannot be empty";
-    // else if (form.model.trim().length > 40)
-    //   e.model = "Model cannot exceed 40 characters";
+    else if (form.model.trim().length > 40)
+      e.model = "Model cannot exceed 40 characters";
 
     if (!form.firstRegistrationYear.trim())
       e.firstRegistrationYear = "First registration year cannot be empty";
@@ -101,7 +106,10 @@ export const AddVehicle: React.FC = () => {
 
       setForm({ ...DEFAULT });
       setErrors({});
-      setServerMessage("Vehicle saved successfully.");
+      setServerMessage({
+        text: "Vehicle saved successfully.",
+        type: "success"
+      });
       console.log("Saved", resp.data);
     } catch (err: any) {
       if (err.response?.data) {
@@ -110,9 +118,15 @@ export const AddVehicle: React.FC = () => {
           typeof err.response.data === "string"
             ? err.response.data
             : err.response.data.error || JSON.stringify(err.response.data);
-        setServerMessage(`Error ${status}: ${error}`);
+        setServerMessage({
+          text: `Error ${status}: ${error}`,
+          type: "error"
+        });
       } else {
-        setServerMessage("Network error or server unreachable.");
+        setServerMessage({
+          text: "Network error or server unreachable.",
+          type: "error"
+        });
       }
     }
   };
@@ -209,7 +223,11 @@ export const AddVehicle: React.FC = () => {
         </div>
       </form>
 
-      {serverMessage && <div className="server-message">{serverMessage}</div>}
+      {serverMessage && (
+        <div className={`server-message${serverMessage.type === "error" ? " error" : ""}`}>
+          {serverMessage.text}
+        </div>
+      )}
     </div>
   );
 };
