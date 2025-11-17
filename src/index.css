@@ -36,8 +36,10 @@
 
 .header {
   background: #0b9eb0;
+  margin-bottom: 10px;
 }
 
 .footer {
   background: #ccc;
+  margin-top: 70px;
 }

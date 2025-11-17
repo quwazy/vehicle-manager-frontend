@@ -1,8 +1,8 @@
 .vehicle-page {
-  padding: 20px;
+  padding: 2px 20px 20px 20px;
   font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background: #ffffff;
-  min-height: 7vh;
+  min-height: 10vh;
 }
 
 .vehicle-header {
@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
   max-width: 1100px;
-  margin: 0 auto 18px;
+  margin: 0 auto 8px;
   gap: 12px;
   padding: 0 12px;
 }
@@ -50,6 +50,7 @@
   border: 0.5px solid black;
   border-radius: 4px;
   overflow: hidden;
+  margin-top: 18px;
 }
 
 /* Header row */
@@ -81,6 +82,7 @@
   font-size: 14px;
   vertical-align: middle;
   word-wrap: break-word;
+  text-align: center;
 }
 
 /* Delete button */
