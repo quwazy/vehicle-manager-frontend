@@ -1,10 +1,16 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .left-container, .right-container {
   position: fixed;
   top: 0;
-  width: 25vw;
+  min-width: 6px;
+  width: 24vw;
   height: 100vh;
   background: white;
-  z-index: 1;
+  z-index: 2;
 }
 
 .left-container {
@@ -17,9 +23,10 @@
 
 #root {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   margin-left: 25vw;
   margin-right: 25vw;
+  min-width: 600px;
 }
 
 .header, .footer {
@@ -37,9 +44,34 @@
 .header {
   background: #0b9eb0;
   margin-bottom: 10px;
+  margin-top: 0px;
 }
 
 .footer {
   background: #ccc;
   margin-top: 70px;
+}
+
+@media (max-width: 1200px) {
+  .left-container, .right-container {
+    width: 12vw;
+    max-width: 90px;
+  }
+  #root .footer {
+    margin-left: 5vw;
+    margin-right: 5vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .left-container, .right-container {
+    width: 7vw;
+    max-width: 50px;
+    min-width: 30px;
+  }
+  #root .footer {
+    margin-left: 8vw;
+    margin-right: 8vw;
+    min-width: 180px;
+  }
 }

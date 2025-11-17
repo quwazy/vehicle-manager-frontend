@@ -77,8 +77,8 @@ export const VehicleTable: React.FC = () => {
               <tr>
                 <th>ID</th>
                 <th>Model</th>
-                <th>First Registration Year</th>
-                <th>Cubic Capacity</th>
+                <th>First registration year</th>
+                <th>Cubic capacity</th>
                 <th>Fuel</th>
                 <th>Mileage</th>
                 <th></th>

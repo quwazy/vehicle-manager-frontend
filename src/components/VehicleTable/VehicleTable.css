@@ -50,7 +50,7 @@
   border: 0.5px solid black;
   border-radius: 4px;
   overflow: hidden;
-  margin-top: 18px;
+  margin-top: 8px;
 }
 
 /* Header row */
@@ -62,14 +62,20 @@
   font-size: 14px;
   font-weight: 700;
   border: 0.5px solid black;
+  height: 35px;
 }
 
 /* ID column */
 .vehicle-table th:first-child,
 .vehicle-table td:first-child {
-  width: 60px;
+  width: 50px;
   max-width: 60px;
   text-align: center;
+}
+
+.vehicle-table th:nth-child(3),
+.vehicle-table td:nth-child(3) {
+  width: 180px;
 }
 
 /* Table Body */
