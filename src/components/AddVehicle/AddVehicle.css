@@ -58,7 +58,7 @@
 .form-group {
   flex: 1 1 280px;
   min-width: 180px;
-  max-width: 300px;
+  max-width: 265px;
   display: flex;
   flex-direction: column;
 }
@@ -135,7 +135,7 @@
 }
 /* When select has no value, show placeholder in grey */
 .input-like:invalid {
-  color: #6f6f70;
+  color: #000000;
 }
 /* When a value is selected, use normal color */
 .input-like:not(:invalid) {

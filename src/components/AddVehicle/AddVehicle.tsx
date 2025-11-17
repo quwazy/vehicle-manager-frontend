@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AddVehicle.css";
 
-type FuelOption = "PETROL" | "DIESEL" | "ELECTRIC" | "HYBRID" | string;
+type FuelOption = "PETROL" | "DIESEL" | "HYBRID" | string;
 
 interface CreateVehicleDTO {
   model: string;
@@ -24,19 +24,20 @@ const DEFAULT: CreateVehicleDTO = {
 export const AddVehicle: React.FC = () => {
   const [form, setForm] = useState<CreateVehicleDTO>({ ...DEFAULT });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [submitting, setSubmitting] = useState(false);
   const [serverMessage, setServerMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const fuelOptions: FuelOption[] = ["PETROL", "DIESEL", "ELECTRIC", "HYBRID"];
+  const fuelOptions: FuelOption[] = ["PETROL", "DIESEL", "HYBRID"];
 
   const validate = (): boolean => {
     const e: Record<string, string> = {};
 
     if (!form.model.trim()) e.model = "Model cannot be empty";
+    // else if (form.model.trim().length > 40)
+    //   e.model = "Model cannot exceed 40 characters";
+
     if (!form.firstRegistrationYear.trim())
       e.firstRegistrationYear = "First registration year cannot be empty";
-    // optionally: validate it's a year (simple)
     if (
       form.firstRegistrationYear.trim() &&
       !/^\d{4}$/.test(form.firstRegistrationYear.trim())
@@ -48,13 +49,16 @@ export const AddVehicle: React.FC = () => {
       e.cubicCapacity = "Cubic capacity cannot be empty";
     else if (form.cubicCapacity <= 0)
       e.cubicCapacity = "Cubic capacity must be positive";
+    else if (form.cubicCapacity > 9999)
+      e.cubicCapacity = "Cubic capacity cannot exceed 9,999 cc";
 
     if (!form.fuel) e.fuel = "Fuel cannot be null";
 
     if (form.mileage === null || Number.isNaN(form.mileage))
       e.mileage = "Mileage cannot be empty";
-    else if (form.mileage < 0) 
-      e.mileage = "Mileage cannot be negative";
+    else if (form.mileage < 0) e.mileage = "Mileage cannot be negative";
+    else if (form.mileage > 9999999)
+      e.mileage = "Mileage cannot exceed 9,999,999 km";
 
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -87,7 +91,6 @@ export const AddVehicle: React.FC = () => {
     };
 
     try {
-      setSubmitting(true);
       const resp = await axios.post(
         "http://localhost:8080/api/vehicles/add",
         payload,
@@ -96,27 +99,21 @@ export const AddVehicle: React.FC = () => {
         }
       );
 
-      // success handling: clear form and show message
       setForm({ ...DEFAULT });
       setErrors({});
       setServerMessage("Vehicle saved successfully.");
-      // optionally: emit event or call parent to refresh list
       console.log("Saved", resp.data);
     } catch (err: any) {
-      console.error(err);
-      // Try to show useful message
       if (err.response?.data) {
-        // If backend returns validation errors in a specific shape, map here
-        const msg =
+        const status = err.response.status;
+        const error =
           typeof err.response.data === "string"
             ? err.response.data
-            : JSON.stringify(err.response.data);
-        setServerMessage("Server error: " + msg);
+            : err.response.data.error || JSON.stringify(err.response.data);
+        setServerMessage(`Error ${status}: ${error}`);
       } else {
         setServerMessage("Network error or server unreachable.");
       }
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -126,10 +123,11 @@ export const AddVehicle: React.FC = () => {
         <h1>New vehicle</h1>
         <button
           className="btn-save"
-          onClick={() => { navigate("/") }}
-          title="Home"
+          onClick={() => {
+            navigate("/");
+          }}
         >
-          Save
+          Home
         </button>
       </div>
 
@@ -160,7 +158,6 @@ export const AddVehicle: React.FC = () => {
           <div className="form-group">
             <input
               placeholder="Cubic capacity"
-              // type="number"
               value={form.cubicCapacity ?? ""}
               onChange={onChange("cubicCapacity")}
               className={errors.cubicCapacity ? "invalid" : ""}
@@ -178,7 +175,9 @@ export const AddVehicle: React.FC = () => {
               onChange={onChange("fuel")}
               className={`input-like${errors.fuel ? " invalid" : ""}`}
             >
-              <option value="" disabled hidden className="placeholder-option">Fuel</option>
+              <option value="" disabled hidden className="placeholder-option">
+                Fuel
+              </option>
               {fuelOptions.map((f) => (
                 <option key={f} value={f}>
                   {f.charAt(0) + f.slice(1).toLowerCase()}
@@ -191,7 +190,6 @@ export const AddVehicle: React.FC = () => {
           <div className="form-group">
             <input
               placeholder="Mileage"
-              // type="number"
               value={form.mileage ?? ""}
               onChange={onChange("mileage")}
               className={errors.mileage ? "invalid" : ""}
@@ -201,13 +199,12 @@ export const AddVehicle: React.FC = () => {
             )}
           </div>
         </div>
-                <div className="form-actions">
+        <div className="form-actions">
           <button
             type="submit"
             className="btn-save btn-save-inline"
-            disabled={submitting}
           >
-            {submitting ? "Saving..." : "Save"}
+            Save
           </button>
         </div>
       </form>
