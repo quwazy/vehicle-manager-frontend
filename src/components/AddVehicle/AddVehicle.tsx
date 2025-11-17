@@ -29,7 +29,9 @@ interface ServerMessage {
 export const AddVehicle: React.FC = () => {
   const [form, setForm] = useState<CreateVehicleDTO>({ ...DEFAULT });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [serverMessage, setServerMessage] = useState<ServerMessage | null>(null);
+  const [serverMessage, setServerMessage] = useState<ServerMessage | null>(
+    null
+  );
   const navigate = useNavigate();
 
   const fuelOptions: FuelOption[] = ["PETROL", "DIESEL", "HYBRID"];
@@ -49,8 +51,8 @@ export const AddVehicle: React.FC = () => {
       e.firstRegistrationYear = "Enter a 4-digit year (e.g. 2023)";
     } else {
       const year = Number(form.firstRegistrationYear.trim());
-      if (year < 1885 || year > 2025) {
-        e.firstRegistrationYear = "Year must be between 1885 and 2025";
+      if (year < 1885 || year > 2026) {
+        e.firstRegistrationYear = "Year must be between 1885 and 2026";
       }
     }
 
@@ -63,8 +65,7 @@ export const AddVehicle: React.FC = () => {
 
     if (form.mileage === null || Number.isNaN(form.mileage))
       e.mileage = "Mileage cannot be empty";
-    else if (form.mileage < 0) 
-      e.mileage = "Mileage cannot be negative";
+    else if (form.mileage < 0) e.mileage = "Mileage cannot be negative";
     else if (form.mileage > 9999999)
       e.mileage = "Mileage cannot exceed 9,999,999 km";
 
@@ -111,7 +112,7 @@ export const AddVehicle: React.FC = () => {
       setErrors({});
       setServerMessage({
         text: "Vehicle saved successfully.",
-        type: "success"
+        type: "success",
       });
       console.log("Saved", resp.data);
     } catch (err: any) {
@@ -123,12 +124,12 @@ export const AddVehicle: React.FC = () => {
             : err.response.data.error || JSON.stringify(err.response.data);
         setServerMessage({
           text: `Error ${status}: ${error}`,
-          type: "error"
+          type: "error",
         });
       } else {
         setServerMessage({
           text: "Network error or server unreachable.",
-          type: "error"
+          type: "error",
         });
       }
     }
@@ -197,7 +198,7 @@ export const AddVehicle: React.FC = () => {
               </option>
               {fuelOptions.map((f) => (
                 <option key={f} value={f}>
-                  {f.charAt(0) + f.slice(1).toLowerCase()}
+                  {f}
                 </option>
               ))}
             </select>
@@ -217,17 +218,18 @@ export const AddVehicle: React.FC = () => {
           </div>
         </div>
         <div className="form-actions">
-          <button
-            type="submit"
-            className="btn-save btn-save-inline"
-          >
+          <button type="submit" className="btn-save btn-save-inline">
             Save
           </button>
         </div>
       </form>
 
       {serverMessage && (
-        <div className={`server-message${serverMessage.type === "error" ? " error" : ""}`}>
+        <div
+          className={`server-message${
+            serverMessage.type === "error" ? " error" : ""
+          }`}
+        >
           {serverMessage.text}
         </div>
       )}

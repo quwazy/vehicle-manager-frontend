@@ -46,7 +46,6 @@
   padding: 12px;
 }
 
-/* Layout rows */
 .form-row {
   display: flex;
   gap: 18px;
@@ -54,7 +53,6 @@
   flex-wrap: wrap;
 }
 
-/* Each field group */
 .form-group {
   flex: 1 1 280px;
   min-width: 180px;
@@ -128,20 +126,10 @@
   box-shadow: 0 0 0 3px rgba(11, 158, 176, 0.08);
   border-color: #0b9eb0;
 }
-/* Remove default arrow for select */
-.input-like::-ms-expand {
-  display: none;
-}
 
-/* When select has no value, show placeholder in grey */
-.input-like:invalid {
-  color: #6f6f70;
-}
-
-/* When a value is selected, use normal color */
 .input-like:not(:invalid) {
   color: #6f6f70;
-} 
+}
 
 /* responsive */
 @media (max-width: 900px) {
