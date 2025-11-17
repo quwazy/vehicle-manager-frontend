@@ -3,7 +3,7 @@
   top: 0;
   width: 25vw;
   height: 100vh;
-  background: #069db0;
+  background: whitesmoke;
   z-index: 1;
 }
 
@@ -20,4 +20,24 @@
   z-index: 2;
   margin-left: 25vw;
   margin-right: 25vw;
+}
+
+.header, .footer {
+  margin-left: 25vw;
+  margin-right: 25vw;
+  width: auto;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 1rem;
+}
+
+.header {
+  background: #0b9eb0;
+}
+
+.footer {
+  background: #ccc;
 }
