@@ -1,0 +1,158 @@
+.add-vehicle-page {
+  padding: 2px 20px 20px 20px;
+  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 30vh;
+  background: #fff;
+}
+
+/* Header with title and save button on the right */
+.add-vehicle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto 18px;
+  padding: 0 12px;
+}
+
+.add-vehicle-header h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  color: black;
+}
+
+/* Save button */
+.btn-save {
+  background: #00c853;
+  color: white;
+  padding: 8px 26px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+}
+.btn-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn-save:hover { transform: translateY(-1px); }
+
+/* Form container */
+.add-vehicle-form {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+/* Layout rows */
+.form-row {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+/* Each field group */
+.form-group {
+  flex: 1 1 280px;
+  min-width: 180px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input / select styling */
+.form-group input,
+.form-group select {
+  height: 30px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #d2d2d2;
+  outline: none;
+  font-size: 14px;
+  transition: box-shadow 0.12s, transform 0.06s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  box-shadow: 0 0 0 3px rgba(11, 158, 176, 0.08);
+  border-color: #0b9eb0;
+}
+
+/* invalid style */
+.invalid {
+  border-color: #b00020 !important;
+}
+
+/* small error text */
+.error-text {
+  color: #b00020;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+/* server response message */
+.server-message {
+  max-width: 1100px;
+  margin: 16px auto;
+  padding: 12px;
+  background: #f3f9f4;
+  border: 1px solid #dceddf;
+  color: #0b6b3a;
+  border-radius: 6px;
+}
+
+/* Make select look like input and hide arrow */
+.input-like {
+  background: #fff;
+  height: 36px;
+  min-height: 48px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #d2d2d2;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-sizing: border-box;
+}
+.input-like:focus {
+  box-shadow: 0 0 0 3px rgba(11, 158, 176, 0.08);
+  border-color: #0b9eb0;
+}
+/* Remove default arrow for select */
+.input-like::-ms-expand {
+  display: none;
+}
+
+/* Placeholder option for select (grey text) */
+.input-like option.placeholder-option {
+  color: #aaa;
+}
+/* When select has no value, show placeholder in grey */
+.input-like:invalid {
+  color: #6f6f70;
+}
+/* When a value is selected, use normal color */
+.input-like:not(:invalid) {
+  color: #6f6f70;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .form-row {
+    gap: 12px;
+  }
+  .form-group {
+    flex-basis: 100%;
+  }
+  .add-vehicle-header,
+  .add-vehicle-form {
+    padding: 0 10px;
+    max-width: 100%;
+  }
+}
