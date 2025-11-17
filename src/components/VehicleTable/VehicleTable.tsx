@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./VehicleTable.css";
 
@@ -15,6 +16,7 @@ export const VehicleTable: React.FC = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   // Get all vehicles from the backend
   useEffect(() => {
@@ -53,16 +55,13 @@ export const VehicleTable: React.FC = () => {
     }
   };
 
-
   return (
     <div className="vehicle-page">
       <div className="vehicle-header">
         <h1>Vehicle data</h1>
         <button
           className="btn-new"
-          onClick={() => {
-            alert("Open create vehicle form (implement routing/modal).");
-          }}
+          onClick={() => { navigate("/add") }}
         >
           + New
         </button>
