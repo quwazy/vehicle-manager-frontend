@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import VehicleService from "../../services/VehicleService";
+import type { CreateVehicleDto } from "../../services/VehicleService";
 import "./AddVehicle.css";
 
 type FuelOption = "PETROL" | "DIESEL" | "HYBRID" | string;
 
-interface CreateVehicleDTO {
-  model: string;
-  firstRegistrationYear: string;
-  cubicCapacity: number | null;
-  fuel: FuelOption;
-  mileage: number | null;
-}
-
-const DEFAULT: CreateVehicleDTO = {
+const DEFAULT: CreateVehicleDto = {
   model: "",
   firstRegistrationYear: "",
   cubicCapacity: null,
@@ -27,7 +20,7 @@ interface ServerMessage {
 }
 
 export const AddVehicle: React.FC = () => {
-  const [form, setForm] = useState<CreateVehicleDTO>({ ...DEFAULT });
+  const [form, setForm] = useState<CreateVehicleDto>({ ...DEFAULT });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverMessage, setServerMessage] = useState<ServerMessage | null>(null);
   const navigate = useNavigate();
@@ -80,7 +73,7 @@ export const AddVehicle: React.FC = () => {
   };
 
   const onChange =
-    (key: keyof CreateVehicleDTO) =>
+    (key: keyof CreateVehicleDto) =>
     (ev: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const val = ev.target.value;
       setForm((s) => ({ ...s, [key]: val }));
@@ -93,7 +86,7 @@ export const AddVehicle: React.FC = () => {
     if (!validate()) 
       return;
 
-    const payload = {
+    const payload : CreateVehicleDto = {
       model: form.model.trim(),
       firstRegistrationYear: form.firstRegistrationYear.trim(),
       cubicCapacity: form.cubicCapacity,
@@ -102,13 +95,7 @@ export const AddVehicle: React.FC = () => {
     };
 
     try {
-      await axios.post(
-        "http://localhost:8080/api/vehicles/add",
-        payload,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      await VehicleService.createVehicle(payload);
 
       setForm({ ...DEFAULT });  //empty form
       setErrors({});            //clear errors
