@@ -38,7 +38,7 @@ export const AddVehicle: React.FC = () => {
     const e: Record<string, string> = {};
 
     if (!form.fuel) 
-      e.fuel = "Fuel cannot be null";
+      e.fuel = "Fuel must be selected";
 
     if (!form.model.trim()) 
       e.model = "Model cannot be empty";
@@ -58,17 +58,22 @@ export const AddVehicle: React.FC = () => {
 
     if (form.cubicCapacity === null || Number.isNaN(form.cubicCapacity))
       e.cubicCapacity = "Cubic capacity cannot be empty";
-    else if (form.cubicCapacity <= 999)
-      e.cubicCapacity = "Cubic capacity must be above 999 cc";
+    else if (typeof form.cubicCapacity === "string" && !/^\d+$/.test(form.cubicCapacity)) {
+      e.cubicCapacity = "Cubic capacity must be a valid number";
+    } else if (form.cubicCapacity <= 999)
+      e.cubicCapacity = "Cubic capacity must be above 999";
     else if (form.cubicCapacity > 9999)
-      e.cubicCapacity = "Cubic capacity cannot exceed 9,999 cc";
+      e.cubicCapacity = "Cubic capacity cannot exceed 9,999";
 
-    if (form.mileage === null || Number.isNaN(form.mileage))
+    if (form.mileage === null) {
       e.mileage = "Mileage cannot be empty";
-    else if (form.mileage < 0) 
+    } else if (typeof form.mileage === "string" && !/^\d+$/.test(form.mileage)) {
+      e.mileage = "Mileage must be a valid number";
+    } else if (Number(form.mileage) < 0) {
       e.mileage = "Mileage cannot be negative";
-    else if (form.mileage > 9999999)
+    } else if (Number(form.mileage) > 9999999) {
       e.mileage = "Mileage cannot exceed 9,999,999 km";
+    }
 
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -78,19 +83,15 @@ export const AddVehicle: React.FC = () => {
     (key: keyof CreateVehicleDTO) =>
     (ev: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const val = ev.target.value;
-      if (key === "cubicCapacity" || key === "mileage") {
-        // convert to number or null if empty
-        setForm((s) => ({ ...s, [key]: val === "" ? null : Number(val) }));
-      } else {
-        setForm((s) => ({ ...s, [key]: val }));
-      }
+      setForm((s) => ({ ...s, [key]: val }));
     };
 
   const handleSubmit = async (ev?: React.FormEvent) => {
     ev?.preventDefault();
     setServerMessage(null);
 
-    if (!validate()) return;
+    if (!validate()) 
+      return;
 
     const payload = {
       model: form.model.trim(),
@@ -143,8 +144,7 @@ export const AddVehicle: React.FC = () => {
           className="btn-save"
           onClick={() => {
             navigate("/");
-          }}
-        >
+          }}>
           Home
         </button>
       </div>
