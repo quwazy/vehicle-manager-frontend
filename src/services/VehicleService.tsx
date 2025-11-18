@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const vehicleController = import.meta.env.VITE_API_BASE_URL+"/vehicles";
+const vehicleController : string = import.meta.env.VITE_API_BASE_URL+"/vehicles";
 
 if (!vehicleController) {
   console.warn("VITE_API_BASE_URL is not defined in .env!");

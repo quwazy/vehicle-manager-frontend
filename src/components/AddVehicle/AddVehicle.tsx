@@ -4,8 +4,6 @@ import VehicleService from "../../services/VehicleService";
 import type { CreateVehicleDto } from "../../services/VehicleService";
 import "./AddVehicle.css";
 
-type FuelOption = "PETROL" | "DIESEL" | "HYBRID" | string;
-
 const DEFAULT: CreateVehicleDto = {
   model: "",
   firstRegistrationYear: "",
@@ -25,7 +23,7 @@ export const AddVehicle: React.FC = () => {
   const [serverMessage, setServerMessage] = useState<ServerMessage | null>(null);
   const navigate = useNavigate();
 
-  const fuelOptions: FuelOption[] = ["PETROL", "DIESEL", "HYBRID"];
+  const fuelOptions: string[] = ["PETROL", "DIESEL", "HYBRID"];
 
   const validate = (): boolean => {
     const e: Record<string, string> = {};
