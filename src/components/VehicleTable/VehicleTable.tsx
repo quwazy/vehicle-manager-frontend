@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import VehicleService from "../../services/VehicleService";
+import type { VehicleDto } from "../../services/VehicleService";
 import "./VehicleTable.css";
 
-interface Vehicle {
-  id: number;
-  model: string;
-  firstRegistrationYear: string;
-  cubicCapacity: number;
-  fuel: string;
-  mileage: number;
-}
-
 export const VehicleTable: React.FC = () => {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [vehicles, setVehicles] = useState<VehicleDto[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -23,12 +15,8 @@ export const VehicleTable: React.FC = () => {
       try {
         setLoading(true);
         setError(null);
-        const resp = await axios.get<Vehicle[]>(
-          "http://localhost:8080/api/vehicles/all"
-        );
-        setVehicles(resp.data);
+        setVehicles(await VehicleService.getAllVehicles());
       } catch (err: any) {
-        console.error("Error fetching vehicles:", err);
         setError(err?.message || "Failed to load vehicles");
       } finally {
         setLoading(false);
@@ -46,7 +34,7 @@ export const VehicleTable: React.FC = () => {
     setVehicles(vehicles.filter((v) => v.id !== id));
 
     try {
-      await axios.delete(`http://localhost:8080/api/vehicles/remove/${id}`);
+      await VehicleService.deleteVehicle(id);
     } catch (err) {
       setVehicles(previous);
       alert("Failed to delete vehicle");
@@ -103,8 +91,7 @@ export const VehicleTable: React.FC = () => {
                       <button
                         className="btn-delete"
                         onClick={() => handleDelete(v.id)}
-                        title="Delete"
-                      >
+                        title="Delete">
                         Delete
                       </button>
                     </td>
