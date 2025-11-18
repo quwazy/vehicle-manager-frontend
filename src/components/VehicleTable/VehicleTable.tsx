@@ -18,7 +18,6 @@ export const VehicleTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Get all vehicles from the backend
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
@@ -40,7 +39,7 @@ export const VehicleTable: React.FC = () => {
   }, []);
 
   const handleDelete = async (id: number) => {
-    const confirmed = window.confirm("Delete this vehicle?");
+    const confirmed = window.confirm("Do you want to delete vehicle with ID " + id + "?" +"\nThis action cannot be undone.");
     if (!confirmed) return;
 
     const previous = vehicles;
@@ -51,7 +50,6 @@ export const VehicleTable: React.FC = () => {
     } catch (err) {
       setVehicles(previous);
       alert("Failed to delete vehicle");
-      console.error(err);
     }
   };
 
