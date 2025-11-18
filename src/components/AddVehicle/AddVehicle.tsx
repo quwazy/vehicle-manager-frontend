@@ -19,7 +19,7 @@ const DEFAULT: CreateVehicleDTO = {
   cubicCapacity: null,
   fuel: "",
   mileage: null,
-};
+}
 
 interface ServerMessage {
   text: string;
@@ -29,9 +29,7 @@ interface ServerMessage {
 export const AddVehicle: React.FC = () => {
   const [form, setForm] = useState<CreateVehicleDTO>({ ...DEFAULT });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [serverMessage, setServerMessage] = useState<ServerMessage | null>(
-    null
-  );
+  const [serverMessage, setServerMessage] = useState<ServerMessage | null>(null);
   const navigate = useNavigate();
 
   const fuelOptions: FuelOption[] = ["PETROL", "DIESEL", "HYBRID"];
@@ -39,9 +37,11 @@ export const AddVehicle: React.FC = () => {
   const validate = (): boolean => {
     const e: Record<string, string> = {};
 
-    if (!form.fuel) e.fuel = "Fuel cannot be null";
+    if (!form.fuel) 
+      e.fuel = "Fuel cannot be null";
 
-    if (!form.model.trim()) e.model = "Model cannot be empty";
+    if (!form.model.trim()) 
+      e.model = "Model cannot be empty";
     else if (form.model.trim().length > 40)
       e.model = "Model cannot exceed 40 characters";
 
@@ -65,7 +65,8 @@ export const AddVehicle: React.FC = () => {
 
     if (form.mileage === null || Number.isNaN(form.mileage))
       e.mileage = "Mileage cannot be empty";
-    else if (form.mileage < 0) e.mileage = "Mileage cannot be negative";
+    else if (form.mileage < 0) 
+      e.mileage = "Mileage cannot be negative";
     else if (form.mileage > 9999999)
       e.mileage = "Mileage cannot exceed 9,999,999 km";
 
