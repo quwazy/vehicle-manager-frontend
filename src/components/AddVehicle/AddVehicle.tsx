@@ -101,7 +101,7 @@ export const AddVehicle: React.FC = () => {
     };
 
     try {
-      const resp = await axios.post(
+      await axios.post(
         "http://localhost:8080/api/vehicles/add",
         payload,
         {
@@ -109,13 +109,12 @@ export const AddVehicle: React.FC = () => {
         }
       );
 
-      setForm({ ...DEFAULT });
-      setErrors({});
-      setServerMessage({
+      setForm({ ...DEFAULT });  //empty form
+      setErrors({});            //clear errors
+      setServerMessage({        //server success message
         text: "Vehicle saved successfully.",
         type: "success",
       });
-      console.log("Saved", resp.data);
     } catch (err: any) {
       if (err.response?.data) {
         const status = err.response.status;
