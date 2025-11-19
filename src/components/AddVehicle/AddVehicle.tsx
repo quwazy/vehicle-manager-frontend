@@ -10,7 +10,7 @@ const DEFAULT: CreateVehicleDto = {
   cubicCapacity: null,
   fuel: "",
   mileage: null,
-}
+};
 
 interface ServerMessage {
   text: string;
@@ -81,10 +81,9 @@ export const AddVehicle: React.FC = () => {
     ev?.preventDefault();
     setServerMessage(null);
 
-    if (!validate()) 
-      return;
+    if (!validate()) return;
 
-    const payload : CreateVehicleDto = {
+    const payload: CreateVehicleDto = {
       model: form.model.trim(),
       firstRegistrationYear: form.firstRegistrationYear.trim(),
       cubicCapacity: form.cubicCapacity,
@@ -95,12 +94,23 @@ export const AddVehicle: React.FC = () => {
     try {
       await VehicleService.createVehicle(payload);
 
-      setForm({ ...DEFAULT });  //empty form
-      setErrors({});            //clear errors
-      setServerMessage({        //server success message
+      setErrors({});
+      setServerMessage({
         text: "Vehicle saved successfully.",
         type: "success",
       });
+
+      const goHome = window.confirm(
+        "Vehicle saved successfully.\n\nClick OK to go Home, or Cancel to add another vehicle."
+      );
+      
+      if (goHome) {
+        navigate("/");
+      } else {
+        setForm({ ...DEFAULT });
+        setErrors({});
+        setServerMessage(null);
+      }
     } catch (err: any) {
       if (err.response?.data) {
         const status = err.response.status;
@@ -125,16 +135,17 @@ export const AddVehicle: React.FC = () => {
     <div className="add-vehicle-page">
       <div className="add-vehicle-header">
         <h1>New vehicle</h1>
-        <button
-          className="btn-save"
-          onClick={() => {
-            navigate("/");
-          }}>
-          Home
+        <button type="submit" className="btn-save" form="add-vehicle-form">
+          Save
         </button>
       </div>
 
-      <form className="add-vehicle-form" onSubmit={handleSubmit} noValidate>
+      <form
+        id="add-vehicle-form"
+        className="add-vehicle-form"
+        onSubmit={handleSubmit}
+        noValidate
+      >
         <div className="form-row">
           <div className="form-group">
             <input
@@ -201,11 +212,6 @@ export const AddVehicle: React.FC = () => {
               <div className="error-text">{errors.mileage}</div>
             )}
           </div>
-        </div>
-        <div className="form-actions">
-          <button type="submit" className="btn-save btn-save-inline">
-            Save
-          </button>
         </div>
       </form>
 
