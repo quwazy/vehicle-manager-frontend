@@ -103,8 +103,9 @@ export const AddVehicle: React.FC = () => {
       const goHome = window.confirm(
         "Vehicle saved successfully.\n\nClick OK to go Home, or Cancel to add another vehicle."
       );
-      
+
       if (goHome) {
+        setErrors({});
         navigate("/");
       } else {
         setForm({ ...DEFAULT });

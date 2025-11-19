@@ -6,7 +6,7 @@ html, body {
 }
 
 :root {
-  --side-width: 24vw;
+  --side-width: 20vw;
   --side-max-width: 200px;
   --side-min-width: 30px;
 }
