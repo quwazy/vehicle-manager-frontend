@@ -1,13 +1,22 @@
 html, body {
   margin: 0;
   padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+:root {
+  --side-width: 24vw;
+  --side-max-width: 200px;
+  --side-min-width: 30px;
 }
 
 .left-container, .right-container {
   position: fixed;
   top: 0;
-  min-width: 6px;
-  width: 24vw;
+  min-width: var(--side-min-width);
+  width: var(--side-width);
+  max-width: var(--side-max-width);
   height: 100vh;
   background: white;
   z-index: 2;
@@ -24,21 +33,27 @@ html, body {
 #root {
   position: relative;
   z-index: 1;
-  margin-left: 25vw;
-  margin-right: 25vw;
-  min-width: 600px;
+  margin-left: calc(var(--side-width) + 1vw);
+  margin-right: calc(var(--side-width) + 1vw);
+  min-width: 180px;
+  max-width: 1200px;
+  width: auto;
+  box-sizing: border-box;
 }
 
 .header, .footer {
-  margin-left: 25vw;
-  margin-right: 25vw;
+  margin-left: calc(var(--side-width) + 1vw);
+  margin-right: calc(var(--side-width) + 1vw);
   width: auto;
+  min-width: 180px;
+  max-width: 1200px;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #000;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
 .header {
@@ -53,25 +68,19 @@ html, body {
 }
 
 @media (max-width: 1200px) {
-  .left-container, .right-container {
-    width: 12vw;
-    max-width: 90px;
-  }
-  #root .footer {
-    margin-left: 5vw;
-    margin-right: 5vw;
+  :root {
+    --side-width: 12vw;
+    --side-max-width: 90px;
   }
 }
 
 @media (max-width: 700px) {
-  .left-container, .right-container {
-    width: 7vw;
-    max-width: 50px;
-    min-width: 30px;
+  :root {
+    --side-width: 7vw;
+    --side-max-width: 50px;
+    --side-min-width: 20px;
   }
-  #root .footer {
-    margin-left: 8vw;
-    margin-right: 8vw;
-    min-width: 180px;
+  #root, .header, .footer {
+    min-width: 120px;
   }
 }

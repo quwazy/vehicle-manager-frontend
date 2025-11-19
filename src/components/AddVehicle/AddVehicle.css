@@ -55,8 +55,8 @@
 
 .form-group {
   flex: 1 1 280px;
-  min-width: 180px;
-  max-width: 310px;
+  min-width: 300px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
 }
